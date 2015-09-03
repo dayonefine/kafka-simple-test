@@ -23,12 +23,12 @@
 	</bean>
 
 ####sendMag
-kafkaProducer.sendMsg(topic, "feed")
+kafkaProducer.sendMsg(topic, "topic")
 
 ## kafka consumer
 ####applicationContext-kafka-consumer.xml
 	<bean id="topicConsumer" class="com.ofd.kafka.consumer.KafkaConsumerTemplate" destroy-method="shutdown">
-		<property name="topic" value="feed"/>
+		<property name="topic" value="topic"/>
 		<property name="consumerConnector" ref="topicConsumerConnectorService" />
 		<property name="consumeFactory" ref="consumeFactory" />
 	</bean>
@@ -42,7 +42,7 @@ kafkaProducer.sendMsg(topic, "feed")
 	<bean id="topicConsumerConfig" class="kafka.consumer.ConsumerConfig">
 		<constructor-arg>
 			<props>
-				<prop key="zookeeper.connect">10.32.14.20:2181,10.32.14.21:2181,10.32.14.22:2181</prop>
+			<prop key="zookeeper.connect">10.32.14.20:2181,10.32.14.21:2181,10.32.14.22:2181</prop>
 			     <prop key="group.id">group1</prop>
 			     <prop key="zookeeper.session.timeout.ms">400</prop>
 			     <prop key="zookeeper.sync.time.ms">200</prop>
@@ -68,9 +68,9 @@ kafkaProducer.sendMsg(topic, "feed")
 
 	}
 ####Run consumer thread
-	KafkaConsumerTemplate feedConsumer = context.getBean("feedConsumer", KafkaConsumerTemplate.class);
+	KafkaConsumerTemplate topicConsumer = context.getBean("topicConsumer", KafkaConsumerTemplate.class);
 	try {
-    		feedConsumer.run(4);
+    		topicConsumer.run(4); //parameter : thread count
 	} catch (Exception e) {
 		System.out.println("[kafkaCunsumer.run error] " + e.toString());
 		e.printStackTrace();
