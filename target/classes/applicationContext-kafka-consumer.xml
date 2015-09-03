@@ -6,19 +6,19 @@
 		http://www.springframework.org/schema/beans	http://www.springframework.org/schema/beans/spring-beans-3.2.xsd
 		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-3.2.xsd">
 
-	<bean id="feedConsumer" class="com.ofd.kafka.consumer.KafkaConsumerTemplate" destroy-method="shutdown">
+	<bean id="topicConsumer" class="com.ofd.kafka.consumer.KafkaConsumerTemplate" destroy-method="shutdown">
 		<property name="topic" value="feed"/>
-		<property name="consumerConnector" ref="feedConsumerConnectorService" />
-		<property name="consumeFactory" ref="feedConsumeFactory" />
+		<property name="consumerConnector" ref="topicConsumerConnectorService" />
+		<property name="consumeFactory" ref="consumeFactory" />
 	</bean>
 	
-	<bean id="feedConsumeFactory" class="com.ofd.kafka.model.TopicConsumeFactory"/>
+	<bean id="consumeFactory" class="com.ofd.kafka.model.TopicConsumeFactory"/>
 			
-	<bean id="feedConsumerConnectorService" class="kafka.consumer.Consumer"  factory-method="createJavaConsumerConnector" >
-		<constructor-arg ref="feedConsumerConfig"/>
+	<bean id="topicConsumerConnectorService" class="kafka.consumer.Consumer"  factory-method="createJavaConsumerConnector" >
+		<constructor-arg ref="topicConsumerConfig"/>
 	</bean>
 	
-	<bean id="feedConsumerConfig" class="kafka.consumer.ConsumerConfig">
+	<bean id="topicConsumerConfig" class="kafka.consumer.ConsumerConfig">
 		<constructor-arg>
 			<props>
 				<prop key="zookeeper.connect">10.32.14.20:2181,10.32.14.21:2181,10.32.14.22:2181</prop>
